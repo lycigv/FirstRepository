@@ -1,0 +1,160 @@
+
+CREATE PROC GetPayRate @JobTitle nvarchar(50), @Rate float 
+AS
+
+
+SELECT 
+HRE.BusinessEntityID, HRE.JobTitle,
+HEH.Rate,
+PP.FirstName,PP.LastName
+
+FROM HumanResources.Employee AS HRE 
+INNER JOIN HumanResources.EmployeePayHistory AS HEH
+ON HRE.BusinessEntityID = HEH.BusinessEntityID
+
+INNER JOIN Person.Person AS PP
+ON HRE.BusinessEntityID = PP.BusinessEntityID
+WHERE JobTitle= @JobTitle AND Rate= @Rate --------> important
+GO
+
+EXEC GetPayRate  @JobTitle='Senior Tool Designer',@Rate=8.62
+
+___________________________________________________________
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+CREATE PROC GetPayRate @JobTitle nvarchar(50), @Rate float 
+AS
+
+SELECT 
+HRE.BusinessEntityID, HRE.JobTitle,
+HEH.Rate,
+PP.FirstName,PP.LastName
+
+FROM HumanResources.Employee AS HRE 
+INNER JOIN HumanResources.EmployeePayHistory AS HEH
+ON HRE.BusinessEntityID = HEH.BusinessEntityID
+
+INNER JOIN Person.Person AS PP
+ON HRE.BusinessEntityID = PP.BusinessEntityID
+WHERE JobTitle='Senior Tool Designer'
+GO
+
+EXEC GetPayRate  @JobTitle='Senior Tool Designer',@Rate=8.62
+
+-----> records for all Seior Tool Designer
+
+
+-----------------------------------------------
+
+SELECT HRE.BusinessEntityID, HRE.JobTitle,HEH.Rate
+FROM HumanResources.Employee AS HRE INNER JOIN HumanResources.EmployeePayHistory AS HEH
+ON HRE.BusinessEntityID = HEH.BusinessEntityID
+
+SELECT HRE.BusinessEntityID, HRE.JobTitle,PP.FirstName,PP.LastName
+FROM HumanResources.Employee AS HRE INNER JOIN Person.Person AS PP
+ON HRE.BusinessEntityID = PP.BusinessEntityID
+---------------------------------------------------------
+
+CREATE PROC GetPayRate @JobTitle nvarchar(50), @Rate float 
+AS
+SELECT HRE.BusinessEntityID, HRE.JobTitle,HEH.Rate
+FROM HumanResources.Employee AS HRE INNER JOIN HumanResources.EmployeePayHistory AS HEH
+ON HRE.BusinessEntityID = HEH.BusinessEntityID
+
+SELECT HRE.BusinessEntityID, HRE.JobTitle,PP.FirstName,PP.LastName
+FROM HumanResources.Employee AS HRE INNER JOIN Person.Person AS PP
+ON HRE.BusinessEntityID = PP.BusinessEntityID
+
+WHERE @JobTitle='Senior Tool Designer' AND @Rate> 8.000
+
+EXEC GetPayRate  @JobTitle='Senior Tool Designer',@Rate> 8.000
+
+EXEC GetPayRate1  @JobTitle='Senior Tool Designer',@Rate= 8.62 -----> 2 tables
+
+-----------------------------------------
+
+CREATE PROC GetPayRate3 @JobTitle nvarchar(50), @Rate float 
+
+AS
+SELECT 
+HRE.BusinessEntityID, HRE.JobTitle,
+HEH.Rate,
+PP.FirstName,PP.LastName
+
+FROM HumanResources.Employee HRE 
+
+INNER JOIN HumanResources.EmployeePayHistory AS HEH
+ON HRE.BusinessEntityID = HEH.BusinessEntityID
+
+INNER JOIN Person.Person PP
+ON HRE.BusinessEntityID = PP.BusinessEntityID
+WHERE @JobTitle='Senior Tool Designer'
+GO
+
+EXEC GetPayRate3  @JobTitle='Senior Tool Designer',@Rate= 8.62  ------ gives all records?!
+
+-------------------------------------
+
+CREATE PROC GetPayRate @JobTitle nvarchar(50), @Rate float 
+AS
+USE AdventureWorks2012 
+Go
+DECLARE @JobTitle nvarchar(50)
+SET @JobTitle='Senior Tool Designer'
+
+SELECT 
+HRE.BusinessEntityID, HRE.JobTitle,
+HEH.Rate,
+PP.FirstName,PP.LastName
+
+FROM HumanResources.Employee AS HRE 
+INNER JOIN HumanResources.EmployeePayHistory AS HEH
+ON HRE.BusinessEntityID = HEH.BusinessEntityID
+
+INNER JOIN Person.Person AS PP
+ON HRE.BusinessEntityID = PP.BusinessEntityID
+WHERE JobTitle='Senior Tool Designer'
+GO
+
+EXEC GetPayRate  @JobTitle='Senior Tool Designer',@Rate= 8.62
+
+__________________________________
+
+
+XCREATE PROC GetPayRate2 @JobTitle nvarchar(50), @Rate float 
+AS
+SELECT HRE.BusinessEntityID, HRE.JobTitle,HEH.Rate,HRE.BusinessEntityID, HRE.JobTitle,PP.FirstName,PP.LastName
+FROM HumanResources.Employee AS HRE INNER JOIN HumanResources.EmployeePayHistory AS HEH Person.Person AS PP
+ON HRE.BusinessEntityID = HEH.BusinessEntityID, HRE.BusinessEntityID = PP.BusinessEntityID
+
+
+
+
+X SELECT PA.AddressLine1, PA.City,PA.PostalCode,PP.FirstName,PP.LastName,PP.BusinessEntityID
+FROM Person.Address AS PA RIGHT JOIN Person.Person AS PP
+ON PA.rowguid = PP.rowguid
+
+
+
+X SELECT PE.EmailAddressID,PP.FirstName,PP.LastName,PP.BusinessEntityID
+FROM Person.EmailAddress AS PE INNER JOIN Person.Person AS PP
+ON PE.rowguid = PP.rowguid
+
+
